@@ -1,14 +1,13 @@
 package Game;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 
 import Game.Cards.Action;
 import Game.Cards.Card;
 import Game.Cards.UnicornCard;
-import Game.Cards.UnicornCard.UnicornType;
+import Game.Cards.UnicornCard.MagicUnicornCard;
 
 public class Game {
     private static final int NUMBER_OF_PLAYERS = 2;
@@ -41,10 +40,15 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        Action action = (Turn turn) -> {
-            System.out.println("Farded!");
-        };
+        // Action action = (Turn turn) -> {
+        //     System.out.println("Farded!");
+        // };
 
-        action.doIt(null);
+        // action.doIt(null);
+        Card magicUnicorn = (new UnicornCard.MagicUnicornCard.MagicUnicornBuilder())
+            .SetName("Le Epic Magik Unic0rn!")
+            .Build();
+        
+        System.out.println(((MagicUnicornCard)magicUnicorn).name);
     }
 }
