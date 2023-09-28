@@ -1,13 +1,9 @@
 package Game;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 
-import Game.Cards.Action;
 import Game.Cards.Card;
-import Game.Cards.UnicornCard;
-import Game.Cards.UnicornCard.MagicUnicornCard;
 
 public class Game {
     private static final int NUMBER_OF_PLAYERS = 2;
@@ -18,37 +14,53 @@ public class Game {
     private LinkedList<Card> nursery;
     private ArrayList<Player> players;
 
-    public Game() {
-        deck = Card.GenerateDeck();
-        nursery = Card.GenerateNursery();
-        discard = new LinkedList<Card>();
-        players = new ArrayList<Player>(NUMBER_OF_PLAYERS);
+    private void InitializeNursery() {
+        nursery.add(Card.CreateBabyUnicornCard("Baby Narwhal"));
+        nursery.add(Card.CreateBabyUnicornCard("Baby Unicorn (Black)"));
+        nursery.add(Card.CreateBabyUnicornCard("Baby Unicorn (Blue)"));
+        nursery.add(Card.CreateBabyUnicornCard("Baby Unicorn (Brown)"));
+        nursery.add(Card.CreateBabyUnicornCard("Baby Unicorn (Death)"));
+        nursery.add(Card.CreateBabyUnicornCard("Baby Unicorn (Green)"));
+        nursery.add(Card.CreateBabyUnicornCard("Baby Unicorn (Orange)"));
+        nursery.add(Card.CreateBabyUnicornCard("Baby Unicorn (Pink)"));
+        nursery.add(Card.CreateBabyUnicornCard("Baby Unicorn (Purple)"));
+        nursery.add(Card.CreateBabyUnicornCard("Baby Unicorn (Rainbow)"));
+        nursery.add(Card.CreateBabyUnicornCard("Baby Unicorn (Red)"));
+        nursery.add(Card.CreateBabyUnicornCard("Baby Unicorn (Yellow)"));
+        nursery.add(Card.CreateBabyUnicornCard("Baby Unicorn (White)"));
+    }
 
-        Collections.shuffle(deck);
-        Collections.shuffle(nursery);
+    private void InitializeUnicornCards() {
+        var builder = new Card.MagicUnicornCardBuilder();
+        deck.add(builder.SetName("Alluring Narwhal").Build());
+        deck.add(builder.SetName("Americorn").Build());
+        deck.add(builder.SetName("Annoying Flying Unicorn").Build());
+        deck.add(builder.SetName("Black Knigh Unicorn").Build());
+        deck.add(builder.SetName("Chainsaw Unicorn").Build());
+        deck.add(builder.SetName("Classy Narwhal").Build());
+        deck.add(builder.SetName("Dark Angel Unicorn").Build());
+        deck.add(builder.SetName("Extremely Destructive Unicorn").Build());
+        deck.add(builder.SetName("Ginormous Unicorn").SetWeight(2).Build());
+    }
 
-        for (int i = 0; i < NUMBER_OF_PLAYERS; ++i) {
-            var hand = new LinkedList<Card>();
-            for (int j = 0; j < NUMBER_OF_STARTING_CARDS; ++j)
-                hand.add(deck.pop());
+    private void InitializeDeck() {
 
-            var stable = new LinkedList<Card>();
-            stable.add(nursery.pop());
+    }
 
-            players.add(new Player(hand, stable));
-        }
+    private void InitializeGame() {
+        InitializeNursery();
+    }
+
+    Game() {
+        deck = new LinkedList<>();
+        discard = new LinkedList<>();
+        nursery = new LinkedList<>();
+        players = new ArrayList<>(NUMBER_OF_PLAYERS);
+
+        InitializeGame();
     }
 
     public static void main(String[] args) {
-        // Action action = (Turn turn) -> {
-        //     System.out.println("Farded!");
-        // };
-
-        // action.doIt(null);
-        Card magicUnicorn = (new UnicornCard.MagicUnicornCard.MagicUnicornBuilder())
-            .SetName("Le Epic Magik Unic0rn!")
-            .Build();
-        
-        System.out.println(((MagicUnicornCard)magicUnicorn).name);
+        var game = new Game();
     }
 }
