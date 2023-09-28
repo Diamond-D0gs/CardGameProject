@@ -20,17 +20,21 @@ public class Card {
         }
         
         public static class MagicUnicornCard extends UnicornCard {
-            public final Action enterStable; // When the card is entered into the player's stable.
-            public final Action inStable; // When the card is already in a player's stable;
-            public final Action onPlay; // When the card is played by the player.
-            public final int weight;
+            public final CardAction enterStable; // When the card is entered into the player's stable.
+            public final CardAction inStable; // When the card is already in a player's stable;
+            public final CardAction onPlay; // When the card is played by the player.
+            public final int weight; // How many unicorns a card is worth towards the unicorn total.
+            public final boolean immortal; // If the card is sacrificed or discarded, it is returned to the player's hand.
+            public final boolean magicProof; // The card cannot be sacrificed or destroyed by magic.
         
-            private MagicUnicornCard(String name, Action enterStable, Action inStable, Action onPlay, int weight) {
+            private MagicUnicornCard(String name, CardAction enterStable, CardAction inStable, CardAction onPlay, int weight, boolean immortal, boolean magicProof) {
                 super(name, UnicornType.Magic);
                 this.enterStable = enterStable;
                 this.inStable = inStable;
                 this.onPlay = onPlay;
                 this.weight = weight;
+                this.immortal = immortal;
+                this.magicProof = magicProof;
             }
         }
     
@@ -44,9 +48,9 @@ public class Card {
     }
 
     public static class MagicCard extends Card {
-        public final Action cardAction;
+        public final CardAction cardAction;
 
-        private MagicCard(String name, Action cardAction) {
+        private MagicCard(String name, CardAction cardAction) {
             super(name, CardArchetype.Magic);
             this.cardAction = cardAction;
         }
@@ -58,10 +62,10 @@ public class Card {
             Downgrade
         }
         
-        public final Action cardAction;
+        public final CardAction cardAction;
         public final ModifierType modifierType;
 
-        private ModifierCard(String name, Action cardAction, ModifierType modifierType) {
+        private ModifierCard(String name, CardAction cardAction, ModifierType modifierType) {
             super(name, CardArchetype.Modifier);
             this.cardAction = cardAction;
             this.modifierType = modifierType;
@@ -92,23 +96,25 @@ public class Card {
     // Builder & Factory Methods.
 
     public static class MagicUnicornCardBuilder {
-        private Action enterStable = null;
-        private Action inStable = null;
-        private Action onPlay = null;
         private String name = "";
+        private CardAction enterStable = null;
+        private CardAction inStable = null;
+        private CardAction onPlay = null;
         private int weight = 1;
+        private boolean immortal = false;
+        private boolean magicProof = false;
 
-        public MagicUnicornCardBuilder SetEnterStableAction(Action enterStable) {
+        public MagicUnicornCardBuilder SetEnterStableAction(CardAction enterStable) {
             this.enterStable = enterStable;
             return this;
         }
 
-        public MagicUnicornCardBuilder SetInStableAction(Action inStable) {
+        public MagicUnicornCardBuilder SetInStableAction(CardAction inStable) {
             this.inStable = inStable;
             return this;
         }
 
-        public MagicUnicornCardBuilder SetOnPlayAction(Action onPlay) {
+        public MagicUnicornCardBuilder SetOnPlayAction(CardAction onPlay) {
             this.onPlay = onPlay;
             return this;
         }
@@ -123,8 +129,18 @@ public class Card {
             return this;
         }
 
+        public MagicUnicornCardBuilder SetImmortal(boolean immortal) {
+            this.immortal = immortal;
+            return this;
+        }
+
+        public MagicUnicornCardBuilder SetMagicProof(boolean magicProof) {
+            this.magicProof = magicProof;
+            return this;
+        }
+
         public Card Build() {
-            return new UnicornCard.MagicUnicornCard(name, enterStable, inStable, onPlay, weight);
+            return new UnicornCard.MagicUnicornCard(name, enterStable, inStable, onPlay, weight, immortal, magicProof);
         }
     }
 
@@ -136,15 +152,15 @@ public class Card {
         return new UnicornCard(name, UnicornCard.UnicornType.Basic);
     }
 
-    public static Card CreateMagicCard(String name, Action cardAction) {
+    public static Card CreateMagicCard(String name, CardAction cardAction) {
         return new MagicCard(name, cardAction);
     }
 
-    public static Card CreateUpgradeCard(String name, Action cardAction) {
+    public static Card CreateUpgradeCard(String name, CardAction cardAction) {
         return new ModifierCard(name, cardAction, ModifierCard.ModifierType.Upgrade);
     }
 
-    public static Card CreateDowngradeCard(String name, Action cardAction) {
+    public static Card CreateDowngradeCard(String name, CardAction cardAction) {
         return new ModifierCard(name, cardAction, ModifierCard.ModifierType.Downgrade);
     }
 
