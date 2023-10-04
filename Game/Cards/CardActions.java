@@ -48,7 +48,7 @@ public class CardActions {
             public void doIt(Player player);
         }
 
-        public final boolean may;
+        public final boolean may; // If true, player can choose to do action if they want.
         public final Action action;
 
         public CardAction(boolean may, Action action) {
@@ -57,11 +57,11 @@ public class CardActions {
         }
     }
 
-    public final CardAction onEnterStable;
-    public final CardAction onExitStable;
-    public final CardAction inStable;
-    public final CardAction onPlay;
-    public final CardAction onSacrifice;
+    public final CardAction onEnterStable; // Action that triggers when a card enters a stable.
+    public final CardAction onExitStable; // Action that triggers when a card exits a stable.
+    public final CardAction inStable; // Action that triggers in the beginning of a turn when a card is in a stable.
+    public final CardAction onPlay; // Action that triggers when a card is played.
+    public final CardAction onSacrifice; // Action that triggers when a card is sacrificed.
 
     private CardActions(CardAction onEnterStable, CardAction onExitStable, CardAction inStable, CardAction onPlay, CardAction onSacrifice) {
         this.onEnterStable = onEnterStable;
