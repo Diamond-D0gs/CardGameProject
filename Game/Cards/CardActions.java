@@ -2,44 +2,68 @@ package Game.Cards;
 
 import Game.Player;
 
+/**
+ * An immutable aggregation of CardAction instances associated with different actions.
+ */
 public class CardActions {
+    /**
+     * Helps build an instance of CardActions.
+     */
     public static class CardActionsBuilder {
         private CardAction onEnterStable = null;
         private CardAction onExitStable = null;
         private CardAction inStable = null;
-        private CardAction onPlay = null;
         private CardAction onSacrifice = null;
 
+        /**
+         * Sets the CardAction associated with entering the stable.
+         * @param onEnterStable CardAction associated with entering the stable.
+         * @return A reference to the CardActionsBuilder.
+         */
         public CardActionsBuilder SetOnEnterStable(CardAction onEnterStable) {
             this.onEnterStable = onEnterStable;
             return this;
         }
 
+        /**
+         * Sets the CardAction associated with exiting the stable.
+         * @param onExitStable CardAction associated with entering the stable.
+         * @return A reference to the CardActionsBuilder.
+         */
         public CardActionsBuilder SetOnExitStable(CardAction onExitStable) {
             this.onExitStable = onExitStable;
             return this;
         }
 
+        /**
+         * Sets the CardAction associated with being in the stable.
+         * @param inStable CardAction associated with being in the stable.
+         * @return A reference to the CardActionsBuilder.
+         */
         public CardActionsBuilder SetInStable(CardAction inStable) {
             this.inStable = inStable;
             return this;
         }
 
-        public CardActionsBuilder SetOnPlay(CardAction onPlay) {
-            this.onPlay = onPlay;
-            return this;
-        }
-
+        /**
+         * Sets the CardAction associated with being sacrificed.
+         * @param onSacrifice CardAction associated with being sacrificed.
+         * @return A reference to the CardActionsBuilder.
+         */
         public CardActionsBuilder SetOnSacrifice(CardAction onSacrifice) {
             this.onSacrifice = onSacrifice;
             return this;
         }
 
+        /**
+         * Constructs the instance of CardActions.
+         * @return An instance of CardActions, or null if none if the actions were set.
+         */
         public CardActions Build() {
-            if (onEnterStable == null && onExitStable == null && inStable == null && onPlay == null && onSacrifice == null)
+            if (onEnterStable == null && onExitStable == null && inStable == null && onSacrifice == null)
                 return null;
             else
-                return new CardActions(onEnterStable, onExitStable, inStable, onPlay, onSacrifice);
+                return new CardActions(onEnterStable, onExitStable, inStable, onSacrifice);
         }
     }
 
@@ -60,14 +84,12 @@ public class CardActions {
     public final CardAction onEnterStable; // Action that triggers when a card enters a stable.
     public final CardAction onExitStable; // Action that triggers when a card exits a stable.
     public final CardAction inStable; // Action that triggers in the beginning of a turn when a card is in a stable.
-    public final CardAction onPlay; // Action that triggers when a card is played.
     public final CardAction onSacrifice; // Action that triggers when a card is sacrificed.
 
-    private CardActions(CardAction onEnterStable, CardAction onExitStable, CardAction inStable, CardAction onPlay, CardAction onSacrifice) {
+    private CardActions(CardAction onEnterStable, CardAction onExitStable, CardAction inStable, CardAction onSacrifice) {
         this.onEnterStable = onEnterStable;
         this.onExitStable = onExitStable;
         this.inStable = inStable;
-        this.onPlay = onPlay;
         this.onSacrifice = onSacrifice;
     }
 }
