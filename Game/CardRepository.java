@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import Game.Cards.MagicUnicornCard.MagicUnicornBuilder;
 import Game.Cards.BabyUnicornCard;
@@ -17,87 +18,81 @@ public class CardRepository {
     private static CardRepository cardRepository = null;
 
     private ArrayList<Card> cards;
-    private ArrayList<Integer> deck;
-    private ArrayList<Integer> nursery;
+    private ArrayList<Card> deck;
+    private ArrayList<Card> nursery;
 
     /**
      * Creates all the instances of Baby Unicorn Cards.
      * @return A list of Baby Unicorn Cards.
      */
-    private static List<Card> CreateBabyUnicornCards() {
-        var array = new ArrayList<Card>();
-        
-        array.add(new BabyUnicornCard("Baby Narwhal", null));
-        array.add(new BabyUnicornCard("Baby Unicorn (Black)", null));
-        array.add(new BabyUnicornCard("Baby Unicorn (Blue)", null));
-        array.add(new BabyUnicornCard("Baby Unicorn (Brown)", null));
-        array.add(new BabyUnicornCard("Baby Unicorn (Death)", null));
-        array.add(new BabyUnicornCard("Baby Unicorn (Green)", null));
-        array.add(new BabyUnicornCard("Baby Unicorn (Orange)", null));
-        array.add(new BabyUnicornCard("Baby Unicorn (Pink)", null));
-        array.add(new BabyUnicornCard("Baby Unicorn (Purple)", null));
-        array.add(new BabyUnicornCard("Baby Unicorn (Rainbow)", null));
-        array.add(new BabyUnicornCard("Baby Unicorn (Red)", null));
-        array.add(new BabyUnicornCard("Baby Unicorn (Yellow)", null));
-        array.add(new BabyUnicornCard("Baby Unicorn (White)", null));
-        
-        return array;
+    private void CreateBabyUnicornCards() {
+        cards.add(new BabyUnicornCard("Baby Narwhal", null, cards.size()));
+        cards.add(new BabyUnicornCard("Baby Unicorn (Black)", null, cards.size()));
+        cards.add(new BabyUnicornCard("Baby Unicorn (Blue)", null, cards.size()));
+        cards.add(new BabyUnicornCard("Baby Unicorn (Brown)", null, cards.size()));
+        cards.add(new BabyUnicornCard("Baby Unicorn (Death)", null, cards.size()));
+        cards.add(new BabyUnicornCard("Baby Unicorn (Green)", null, cards.size()));
+        cards.add(new BabyUnicornCard("Baby Unicorn (Orange)", null, cards.size()));
+        cards.add(new BabyUnicornCard("Baby Unicorn (Pink)", null, cards.size()));
+        cards.add(new BabyUnicornCard("Baby Unicorn (Purple)", null, cards.size()));
+        cards.add(new BabyUnicornCard("Baby Unicorn (Rainbow)", null, cards.size()));
+        cards.add(new BabyUnicornCard("Baby Unicorn (Red)", null, cards.size()));
+        cards.add(new BabyUnicornCard("Baby Unicorn (Yellow)", null, cards.size()));
+        cards.add(new BabyUnicornCard("Baby Unicorn (White)", null, cards.size()));
     }
 
     /**
      * Creates all the instances of Magic Unicorn Cards.
      * @return A list of Magic Unicorn Cards.
      */
-    private static List<Card> CreateMagicUnicornCards() {
-        var array = new ArrayList<Card>();
-        
-        array.add(new MagicUnicornBuilder("Alluring Narwhal", null)
+    private void CreateMagicUnicornCards() {
+        cards.add(new MagicUnicornBuilder("Alluring Narwhal", null, cards.size())
             .SetCardActions(new CardActionsBuilder()
                 .SetOnEnterStable(new CardAction(false, (Player player) -> {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("Americorn", null)
+        cards.add(new MagicUnicornBuilder("Americorn", null, cards.size())
             .SetCardActions(new CardActionsBuilder()
                 .SetOnEnterStable(new CardAction(true, (Player player) -> {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("Annoying Flying Unicorn", null)
+        cards.add(new MagicUnicornBuilder("Annoying Flying Unicorn", null, cards.size())
             .SetIsImmortal(true)
             .SetCardActions(new CardActionsBuilder()
                 .SetOnEnterStable(new CardAction(true, (Player player) -> {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("Black Knight Unicorn", null)
+        cards.add(new MagicUnicornBuilder("Black Knight Unicorn", null, cards.size())
             .SetCanMartyr(true)
             .Build());
-        array.add(new MagicUnicornBuilder("Chainsaw Unicorn", null)
+        cards.add(new MagicUnicornBuilder("Chainsaw Unicorn", null, cards.size())
             .SetCardActions(new CardActionsBuilder()
                 .SetOnEnterStable(new CardAction(true, (Player player) -> {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("Classy Narwhal", null)
+        cards.add(new MagicUnicornBuilder("Classy Narwhal", null, cards.size())
             .SetCardActions(new CardActionsBuilder()
                 .SetOnEnterStable(new CardAction(true, (Player player) -> {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("Dark Angel Unicorn", null)
+        cards.add(new MagicUnicornBuilder("Dark Angel Unicorn", null, cards.size())
             .SetCardActions(new CardActionsBuilder()
                 .SetOnEnterStable(new CardAction(true, (Player player) -> {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("Extremely Destructive Unicorn", null)
+        cards.add(new MagicUnicornBuilder("Extremely Destructive Unicorn", null, cards.size())
             .SetCardActions(new CardActionsBuilder()
                 .SetOnEnterStable(new CardAction(false, (Player player) -> {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("Ginormous Unicorn", null)
+        cards.add(new MagicUnicornBuilder("Ginormous Unicorn", null, cards.size())
             .SetWeight(2)
             .SetCardActions(new CardActionsBuilder()
                 .SetOnEnterStable(new CardAction(false, (Player player) -> {
@@ -107,102 +102,100 @@ public class CardRepository {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("Greedy Flying Unicorn", null)
+        cards.add(new MagicUnicornBuilder("Greedy Flying Unicorn", null, cards.size())
             .SetIsImmortal(true)
             .SetCardActions(new CardActionsBuilder()
                 .SetOnEnterStable(new CardAction(false, (Player player) -> {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("Llamacorn", null)
+        cards.add(new MagicUnicornBuilder("Llamacorn", null, cards.size())
             .SetCardActions(new CardActionsBuilder()
                 .SetOnEnterStable(new CardAction(false, (Player player) -> {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("Magical Flying Unicorn", null)
+        cards.add(new MagicUnicornBuilder("Magical Flying Unicorn", null, cards.size())
             .SetIsImmortal(true)
             .SetCardActions(new CardActionsBuilder()
                 .SetOnEnterStable(new CardAction(true, (Player player) -> {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("Magical Kittencorn", null)
+        cards.add(new MagicUnicornBuilder("Magical Kittencorn", null, cards.size())
             .SetIsMagicProof(true)
             .Build());
-        array.add(new MagicUnicornBuilder("Majestic Flying Unicorn", null)
+        cards.add(new MagicUnicornBuilder("Majestic Flying Unicorn", null, cards.size())
             .SetIsImmortal(true)
             .SetCardActions(new CardActionsBuilder()
                 .SetOnEnterStable(new CardAction(true, (Player player) -> {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("Mermaid Unicorn", null)
+        cards.add(new MagicUnicornBuilder("Mermaid Unicorn", null, cards.size())
             .SetCardActions(new CardActionsBuilder()
                 .SetOnEnterStable(new CardAction(false, (Player player) -> {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("Narwhal Torpedo", null)
+        cards.add(new MagicUnicornBuilder("Narwhal Torpedo", null, cards.size())
             .SetCardActions(new CardActionsBuilder()
                 .SetOnEnterStable(new CardAction(false, (Player player) -> {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("Rhinocorn", null)
+        cards.add(new MagicUnicornBuilder("Rhinocorn", null, cards.size())
             .SetCardActions(new CardActionsBuilder()
                 .SetInStable(new CardAction(true, (Player player) -> {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("Shabby The Narwhal", null)
+        cards.add(new MagicUnicornBuilder("Shabby The Narwhal", null, cards.size())
             .SetCardActions(new CardActionsBuilder()
                 .SetOnEnterStable(new CardAction(true, (Player player) -> {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("Shark With A Horn", null)
+        cards.add(new MagicUnicornBuilder("Shark With A Horn", null, cards.size())
             .SetCardActions(new CardActionsBuilder()
                 .SetOnEnterStable(new CardAction(true, (Player player) -> {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("Stabby The Unicorn", null)
+        cards.add(new MagicUnicornBuilder("Stabby The Unicorn", null, cards.size())
             .SetCardActions(new CardActionsBuilder()
                 .SetOnSacrifice(new CardAction(true, (Player player) -> {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("Swift Flying Unicorn", null)
+        cards.add(new MagicUnicornBuilder("Swift Flying Unicorn", null, cards.size())
             .SetIsImmortal(true)
             .SetCardActions(new CardActionsBuilder()
                 .SetOnEnterStable(new CardAction(true, (Player player) -> {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("The Great Narwhal", null)
+        cards.add(new MagicUnicornBuilder("The Great Narwhal", null, cards.size())
             .SetCardActions(new CardActionsBuilder()
                 .SetOnEnterStable(new CardAction(true, (Player player) -> {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("Unicorn On The Cob", null)
+        cards.add(new MagicUnicornBuilder("Unicorn On The Cob", null, cards.size())
             .SetCardActions(new CardActionsBuilder()
                 .SetOnEnterStable(new CardAction(true, (Player player) -> {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("Unicorn Oracle", null)
+        cards.add(new MagicUnicornBuilder("Unicorn Oracle", null, cards.size())
             .SetCardActions(new CardActionsBuilder()
                 .SetOnEnterStable(new CardAction(false, (Player player) -> {
                     return;
                 })).Build()
             ).Build());
-        array.add(new MagicUnicornBuilder("Unicorn Phoenix", null)
+        cards.add(new MagicUnicornBuilder("Unicorn Phoenix", null, cards.size())
             .SetIsImmortal(true)
             .Build());
-        
-        return array;
     }
 
     /**
@@ -210,23 +203,19 @@ public class CardRepository {
      */
     private CardRepository() {
         cards = new ArrayList<Card>();
-        deck = new ArrayList<Integer>();
-        nursery = new ArrayList<Integer>();
 
         // First Card is the "null card".
         cards.add(null);
-        
+
         // Create the nursery template.
         int offset = cards.size();
-        cards.addAll(CreateBabyUnicornCards());
-        for (int i = offset; i < cards.size(); ++i)
-            nursery.add(i);
+        CreateBabyUnicornCards();
+        nursery = new ArrayList<Card>(cards.subList(offset, cards.size()));
 
         // Create the deck template.
         offset = cards.size();
-        cards.addAll(CreateMagicUnicornCards());
-        for (int i = offset; i < cards.size(); ++i)
-            deck.add(i);
+        CreateMagicUnicornCards();
+        deck = new ArrayList<Card>(cards.subList(offset, cards.size()));
     }
 
     /**
@@ -241,21 +230,25 @@ public class CardRepository {
 
     /**
      * Creates a new nursery that's been shuffled.
-     * @return A list of shuffled Baby Unicorn Card IDs.
+     * @param seed Randomization seed for shuffle.
+     * @return A list of shuffled Baby Unicorn Cards.
      */
-    public List<Integer> CreateShuffledNursery() {
-        var shuffledNursery = new LinkedList<Integer>(nursery);
-        Collections.shuffle(shuffledNursery);
+    public List<Card> CreateShuffledNursery(long seed) {
+        var shuffledNursery = new LinkedList<Card>(nursery);
+        // Random is guaranteed to be consistent, given the same seed, across all JVM versions since Java 8.
+        Collections.shuffle(shuffledNursery, new Random(seed));
         return shuffledNursery;
     }
 
     /**
      * Creates a new deck that's been shuffled.
-     * @return A list of shuffled Card IDs.
+     * @param seed Randomization seed for shuffle.
+     * @return A list of shuffled Cards.
      */
-    public List<Integer> CreateShuffledDeck() {
-        var shuffledDeck = new LinkedList<Integer>(deck);
-        Collections.shuffle(shuffledDeck);
+    public List<Card> CreateShuffledDeck(long seed) {
+        var shuffledDeck = new LinkedList<Card>(deck);
+        // Random is guaranteed to be consistent, given the same seed, across all JVM versions since Java 8.
+        Collections.shuffle(shuffledDeck, new Random(seed));
         return shuffledDeck;
     }
 

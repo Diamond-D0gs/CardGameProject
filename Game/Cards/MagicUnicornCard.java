@@ -2,17 +2,19 @@ package Game.Cards;
 
 public class MagicUnicornCard extends UnicornCard {
     public static class MagicUnicornBuilder {
-        private String name = null;
-        private String imageFileName = null;
+        private String name;
+        private String imageFileName;
+        private int cardID;
         private boolean isImmortal = false;
         private boolean isMagicProof = false;
         private boolean canMartyr = false;
         private int weight = 1;
         private CardActions cardActions = null;
         
-        public MagicUnicornBuilder(String name, String imageFileName) {
+        public MagicUnicornBuilder(String name, String imageFileName, int cardID) {
             this.name = name;
             this.imageFileName = imageFileName;
+            this.cardID = cardID;
         }
 
         public MagicUnicornBuilder SetIsImmortal(boolean isImmortal) {
@@ -41,7 +43,7 @@ public class MagicUnicornCard extends UnicornCard {
         }
 
         public MagicUnicornCard Build() {
-            return new MagicUnicornCard(name, imageFileName, cardActions, isImmortal, isMagicProof, canMartyr, weight);
+            return new MagicUnicornCard(name, imageFileName, cardID, cardActions, isImmortal, isMagicProof, canMartyr, weight);
         }
     }
     
@@ -51,8 +53,8 @@ public class MagicUnicornCard extends UnicornCard {
     public final boolean canMartyr;
     public final int weight;
 
-    private MagicUnicornCard(String name, String imageFileName, CardActions cardActions, boolean isImmortal, boolean isMagicProof, boolean canMartyr, int weight) {
-        super(name, imageFileName);
+    private MagicUnicornCard(String name, String imageFileName, int cardID, CardActions cardActions, boolean isImmortal, boolean isMagicProof, boolean canMartyr, int weight) {
+        super(name, imageFileName, cardID);
         this.cardActions = cardActions;
         this.isImmortal = isImmortal;
         this.isMagicProof = isMagicProof;

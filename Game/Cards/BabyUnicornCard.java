@@ -1,7 +1,7 @@
 package Game.Cards;
 
 public class BabyUnicornCard extends UnicornCard {
-    public BabyUnicornCard(String name, String imageFileName) {
-        super(name, imageFileName);
+    public BabyUnicornCard(String name, String imageFileName, int cardID) {
+        super(name, imageFileName, cardID);
     }
 }
