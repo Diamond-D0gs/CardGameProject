@@ -67,7 +67,13 @@ public class CardActions {
         }
     }
 
+    /**
+     * Stores a lambda that modifies a player's state, & a flag that indicating if the action is optional.
+     */
     public static class CardAction {
+        /**
+         * An interface to allow the creation of action lambdas.
+         */
         public interface Action {
             public void doIt(Player player);
         }
