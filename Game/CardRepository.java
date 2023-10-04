@@ -18,8 +18,8 @@ public class CardRepository {
     private static CardRepository cardRepository = null;
 
     private ArrayList<Card> cards;
-    private ArrayList<Card> deck;
-    private ArrayList<Card> nursery;
+    int nurseryOffset;
+    int deckOffset;
 
     /**
      * Creates all the instances of Baby Unicorn Cards.
@@ -204,18 +204,16 @@ public class CardRepository {
     private CardRepository() {
         cards = new ArrayList<Card>();
 
-        // First Card is the "null card".
+        // First Card, Card ID 0, is the "null card".
         cards.add(null);
 
-        // Create the nursery template.
-        int offset = cards.size();
+        // Get nursery offset.
+        nurseryOffset = cards.size();
         CreateBabyUnicornCards();
-        nursery = new ArrayList<Card>(cards.subList(offset, cards.size()));
 
-        // Create the deck template.
-        offset = cards.size();
+        // Create deck offset.
+        deckOffset = cards.size();
         CreateMagicUnicornCards();
-        deck = new ArrayList<Card>(cards.subList(offset, cards.size()));
     }
 
     /**
@@ -234,10 +232,10 @@ public class CardRepository {
      * @return A list of shuffled Baby Unicorn Cards.
      */
     public List<Card> CreateShuffledNursery(long seed) {
-        var shuffledNursery = new LinkedList<Card>(nursery);
+        var shuffledNursery = cards.subList(nurseryOffset, deckOffset);
         // Random is guaranteed to be consistent, given the same seed, across all JVM versions since Java 8.
         Collections.shuffle(shuffledNursery, new Random(seed));
-        return shuffledNursery;
+        return new LinkedList<Card>(shuffledNursery);
     }
 
     /**
@@ -246,10 +244,10 @@ public class CardRepository {
      * @return A list of shuffled Cards.
      */
     public List<Card> CreateShuffledDeck(long seed) {
-        var shuffledDeck = new LinkedList<Card>(deck);
+        var shuffledDeck = cards.subList(deckOffset, cards.size());
         // Random is guaranteed to be consistent, given the same seed, across all JVM versions since Java 8.
         Collections.shuffle(shuffledDeck, new Random(seed));
-        return shuffledDeck;
+        return new LinkedList<Card>(shuffledDeck);
     }
 
     /**

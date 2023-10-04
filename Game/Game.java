@@ -15,6 +15,12 @@ public class Game {
         // frame.setVisible(true);
 
         var repo = CardRepository.GetCardRepository();
-        var deck = repo.CreateShuffledDeck(Calendar.getInstance().getTime().getTime());
+        
+        long seed = Calendar.getInstance().getTime().getTime();
+        
+        var nursery = repo.CreateShuffledNursery(seed);
+        var deck = repo.CreateShuffledDeck(seed);
+
+        return;
     }
 }
