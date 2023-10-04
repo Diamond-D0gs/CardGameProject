@@ -1,18 +1,30 @@
+package Game;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 import Game.Cards.MagicUnicornCard.MagicUnicornBuilder;
-import Game.Player;
 import Game.Cards.BabyUnicornCard;
 import Game.Cards.Card;
 import Game.Cards.CardActions.CardAction;
 import Game.Cards.CardActions.CardActionsBuilder;
 
+/**
+ * Stores the original instance of each card, translates Card IDs into Card objects.
+ */
 public class CardRepository {
     private static CardRepository cardRepository = null;
 
     private ArrayList<Card> cards;
+    private ArrayList<Integer> deck;
+    private ArrayList<Integer> nursery;
 
-    private static ArrayList<Card> CreateBabyUnicornCards() {
+    /**
+     * Creates all the instances of Baby Unicorn Cards.
+     * @return A list of Baby Unicorn Cards.
+     */
+    private static List<Card> CreateBabyUnicornCards() {
         var array = new ArrayList<Card>();
         
         array.add(new BabyUnicornCard("Baby Narwhal", null));
@@ -32,7 +44,11 @@ public class CardRepository {
         return array;
     }
 
-    private static ArrayList<Card> CreateMagicUnicornCards() {
+    /**
+     * Creates all the instances of Magic Unicorn Cards.
+     * @return A list of Magic Unicorn Cards.
+     */
+    private static List<Card> CreateMagicUnicornCards() {
         var array = new ArrayList<Card>();
         
         array.add(new MagicUnicornBuilder("Alluring Narwhal", null)
@@ -189,8 +205,67 @@ public class CardRepository {
         return array;
     }
 
+    /**
+     * The constructor.
+     */
     private CardRepository() {
         cards = new ArrayList<Card>();
+        deck = new ArrayList<Integer>();
+        nursery = new ArrayList<Integer>();
+
+        // First Card is the "null card".
+        cards.add(null);
         
+        // Create the nursery template.
+        int offset = cards.size();
+        cards.addAll(CreateBabyUnicornCards());
+        for (int i = offset; i < cards.size(); ++i)
+            nursery.add(i);
+
+        // Create the deck template.
+        offset = cards.size();
+        cards.addAll(CreateMagicUnicornCards());
+        for (int i = offset; i < cards.size(); ++i)
+            deck.add(i);
+    }
+
+    /**
+     * Fetches the existing instance of Card Repository, creates it if it doesn't exist already.
+     * @return The instance of Card Repository.
+     */
+    public static CardRepository GetCardRepository() {
+        if (cardRepository == null) // If it doesn't exist yet then instantiate it.
+            cardRepository = new CardRepository();
+        return cardRepository;
+    }
+
+    /**
+     * Creates a new nursery that's been shuffled.
+     * @return A list of shuffled Baby Unicorn Card IDs.
+     */
+    public List<Integer> CreateShuffledNursery() {
+        var shuffledNursery = new LinkedList<Integer>(nursery);
+        Collections.shuffle(shuffledNursery);
+        return shuffledNursery;
+    }
+
+    /**
+     * Creates a new deck that's been shuffled.
+     * @return A list of shuffled Card IDs.
+     */
+    public List<Integer> CreateShuffledDeck() {
+        var shuffledDeck = new LinkedList<Integer>(deck);
+        Collections.shuffle(shuffledDeck);
+        return shuffledDeck;
+    }
+
+    /**
+     * Turns Card IDs into Card objects.
+     * @param cardID The Card ID to decode.
+     * @return The Card object associated with the Card ID.
+     * @throws IndexOutOfBoundsException Card ID is not within the bounds of the internal Card List.
+     */
+    public Card DecodeCard(int cardID) throws IndexOutOfBoundsException {
+        return cards.get(cardID);
     }
 }
