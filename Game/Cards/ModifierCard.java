@@ -8,12 +8,39 @@ public class ModifierCard extends Card {
      * Helps construct an instance of a ModifierCard.
      */
     public static class ModifierCardBuilder {
+        /**
+         * Name of the Card being built.
+         */
         protected String name;
+
+        /**
+         * Path to an Image representing a Card being built.
+         */
         protected String imageFileName;
+
+        /**
+         * ID of the card being built.
+         */
         protected int cardID;
+
+        /**
+         * Action associated with the ModifierCard entering a Stable.
+         */
         protected CardAction onEnterStable = null;
+
+        /**
+         * Action associated with the ModifierCard exiting a Stable.
+         */
         protected CardAction onExitStable = null;
+
+        /**
+         * Action associated with the ModifierCard being in a Stable.
+         */
         protected CardAction inStable = null;
+        
+        /**
+         * Action associated with the ModifierCard being sacrificed.
+         */
         protected CardAction onSacrifice = null;
 
         /**
@@ -97,6 +124,16 @@ public class ModifierCard extends Card {
      */
     public final CardAction onSacrifice;
     
+    /**
+     * Constructs a Card representing a MagicUnicornCard.
+     * @param name Name of the Card.
+     * @param imageFileName Path to an Image representing the ModifierCard.
+     * @param cardID ID of the Card.
+     * @param onEnterStable Action that triggers when the ModifierCard enters a stable.
+     * @param onExitStable Action that triggers when the ModifierCard exits a stable.
+     * @param inStable Action that triggers when the ModifierCard is in a stable.
+     * @param onSacrifice Action that triggers when the ModifierCard is sacrificed.
+     */
     protected ModifierCard(String name, String imageFileName, int cardID, CardAction onEnterStable, CardAction onExitStable, 
         CardAction inStable, CardAction onSacrifice) 
     {

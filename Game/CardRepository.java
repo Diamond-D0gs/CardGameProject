@@ -11,18 +11,32 @@ import Game.Cards.Card;
 import Game.Cards.CardAction;
 
 /**
- * Stores the original instance of each card, translates Card IDs into Card objects.
+ * Responsible for the creation of Cards, the assignment of their IDs, their storage, & decoding of IDs back into Card objects.
  */
 public class CardRepository {
+    /**
+     * Reference to the sole CardRepository instance.
+     */
     private static CardRepository cardRepository = null;
 
+    /**
+     * The List of all Cards in the game. IDs are just indices into this List.
+     */
     private ArrayList<Card> cards;
+
+    /**
+     * Where the BabyUnicornCards begin in cards.
+     */
     private int nurseryOffset;
+
+    /**
+     * Where the BabyUnicornCards end & the rest of the deck begins in cards.
+     */
     private int deckOffset;
 
     /**
-     * Creates all the instances of Baby Unicorn Cards.
-     * @return A list of Baby Unicorn Cards.
+     * Creates all the instances of BabyUnicornCards & adds them to cards.
+     * @return A list of BabyUnicornCards.
      */
     private void CreateBabyUnicornCards() {
         cards.add(new BabyUnicornCard("Baby Narwhal", null, cards.size()));
@@ -41,8 +55,8 @@ public class CardRepository {
     }
 
     /**
-     * Creates all the instances of Magic Unicorn Cards.
-     * @return A list of Magic Unicorn Cards.
+     * Creates all the instances of MagicUnicornCards & adds them to cards.
+     * @return A list of MagicUnicornCards.
      */
     private void CreateMagicUnicornCards() {
         cards.add(new MagicUnicornBuilder("Alluring Narwhal", null, cards.size())
@@ -176,19 +190,19 @@ public class CardRepository {
     }
 
     /**
-     * The constructor.
+     * Constructs an instance of CardRepository.
      */
     private CardRepository() {
         cards = new ArrayList<Card>();
 
-        // First Card, Card ID 0, is the "null card".
+        // First Card, Card ID 0, is the "null Card".
         cards.add(null);
 
-        // Get nursery offset.
+        // Get nursery offset & populate cards w/ BabyUnicornCards.
         nurseryOffset = cards.size();
         CreateBabyUnicornCards();
 
-        // Get deck offset.
+        // Get deck offset & populate cards w/ the other Card types.
         deckOffset = cards.size();
         CreateMagicUnicornCards();
     }
@@ -209,6 +223,7 @@ public class CardRepository {
      * @return A list of shuffled Baby Unicorn Cards.
      */
     public List<Card> CreateShuffledNursery(long seed) {
+        // nurseryOffset excludes the null Card & deckOffset excludes non-baby Cards.
         var shuffledNursery = cards.subList(nurseryOffset, deckOffset);
         // Random is guaranteed to be consistent, given the same seed, across all JVM versions since Java 8.
         Collections.shuffle(shuffledNursery, new Random(seed));
@@ -221,6 +236,7 @@ public class CardRepository {
      * @return A list of shuffled Cards.
      */
     public List<Card> CreateShuffledDeck(long seed) {
+        // deckOffset excludes null Card & baby Cards.
         var shuffledDeck = cards.subList(deckOffset, cards.size());
         // Random is guaranteed to be consistent, given the same seed, across all JVM versions since Java 8.
         Collections.shuffle(shuffledDeck, new Random(seed));
@@ -228,7 +244,7 @@ public class CardRepository {
     }
 
     /**
-     * Turns Card IDs into Card objects.
+     * Translates Card IDs into Card objects.
      * @param cardID The Card ID to decode.
      * @return The Card object associated with the Card ID.
      * @throws IndexOutOfBoundsException Card ID is not within the bounds of the internal Card List.

@@ -8,9 +8,24 @@ public class MagicUnicornCard extends ModifierCard implements Unicorn {
      * Helps build an instance of a Magic Unicorn Card.
      */
     public static class MagicUnicornBuilder extends ModifierCardBuilder {
+        /**
+         * The MagicUnicornCard returns to player's hand if Sacrificed or Destroyed instead of going to Discard. Default is false.
+         */
         protected boolean isImmortal = false;
+
+        /**
+         * The MagicUnicornCard cannot be destroyed by the effects of MagicCards. Default is false.
+         */
         protected boolean isMagicProof = false;
+
+        /**
+         * The MagicUnicornCard can be sacrificed instead of another MagicUnicornCard. Default is false.
+         */
         protected boolean canMartyr = false;
+
+        /**
+         * How many Unicorns the MagicUnicornCard is worth. Default is 1.
+         */
         protected int weight = 1;
         
         /**
@@ -73,7 +88,7 @@ public class MagicUnicornCard extends ModifierCard implements Unicorn {
      */
     public final boolean isImmortal;
 
-    /**
+    /**MagicUnicorn
      * The MagicUnicornCard cannot be destroyed by the effects of MagicCards.
      */
     public final boolean isMagicProof;
@@ -88,6 +103,20 @@ public class MagicUnicornCard extends ModifierCard implements Unicorn {
      */
     public final int weight;
 
+    /**
+     * Constructs a Card representing a MagicUnicornCard.
+     * @param name Name of the Card.
+     * @param imageFileName Path to an Image representing the MagicUnicornCard.
+     * @param cardID ID of the Card.
+     * @param onEnterStable Action associated with a MagicUnicornCard entering a Stable.
+     * @param onExitStable Action associated with a MagicUnicornCard exiting a Stable.
+     * @param inStable Action associated with a MagicUnicornCard being in a Stable.
+     * @param onSacrifice Action associated with a MagicUnicornCard being Sacrificed.
+     * @param isImmortal Flag indicating the MagicUnicornCard returns to player's hand if Sacrificed or Destroyed instead of going to Discard.
+     * @param isMagicProof Flag indicating the MagicUnicornCard cannot be destroyed by the effects of MagicCards.
+     * @param canMartyr Flag indicating the MagicUnicornCard can be sacrificed instead of another MagicUnicornCard.
+     * @param weight Number of how many Unicorns the MagicUnicornCard is worth.
+     */
     protected MagicUnicornCard(String name, String imageFileName, int cardID, CardAction onEnterStable, CardAction onExitStable,
         CardAction inStable, CardAction onSacrifice, boolean isImmortal, boolean isMagicProof, boolean canMartyr, int weight) 
     {
