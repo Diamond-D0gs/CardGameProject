@@ -2,7 +2,7 @@ package Game;
 
 import javax.swing.JFrame;
 
-import Game.Cards.UnicornCard;
+import Game.Cards.Unicorn;
 
 import java.awt.GraphicsEnvironment;
 import java.util.Calendar;
@@ -23,6 +23,9 @@ public class Game {
         
         var nursery = repo.CreateShuffledNursery(seed);
         var deck = repo.CreateShuffledDeck(seed);
+
+        var stable = new Stable();
+        stable.AddCard(nursery.get(10), null);
 
         return;
     }
