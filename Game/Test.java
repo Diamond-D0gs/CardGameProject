@@ -61,9 +61,11 @@ public class Test {
             
             System.out.println("Success! IP: " + receivePacket.getAddress() + " Port: " + receivePacket.getPort());
 
-            Socket tcpSocket = new Socket(receivePacket.getAddress(), PORT);
+            ServerSocket receiveSocket = new ServerSocket(PORT);
+            Socket sendSocket = new Socket(receivePacket.getAddress(), PORT);
 
-            tcpSocket.close();
+            receiveSocket.close();
+            sendSocket.close();
 
         } catch(Exception e) {
             System.out.println("Error! " + e.getMessage());
