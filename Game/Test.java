@@ -73,6 +73,8 @@ public class Test {
             else
                 tcpSocket = new Socket(receivePacket.getAddress(), PORT);
 
+            System.out.println("TCP Connection successfully established! " + ((startTime < opponentStartTime) ? "This end is the server." : "This end is the client."));
+
             tcpSocket.close();
             if (serverSocket != null)
                 serverSocket.close();
