@@ -64,6 +64,8 @@ public class Test {
             ServerSocket receiveSocket = new ServerSocket(PORT);
             Socket sendSocket = new Socket(receivePacket.getAddress(), PORT);
 
+            Thread.sleep(100);
+
             receiveSocket.close();
             sendSocket.close();
 
