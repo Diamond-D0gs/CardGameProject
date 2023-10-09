@@ -38,8 +38,6 @@ public class Test {
             byte[] receiveBuffer = new byte[256];
             DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
 
-
-
             boolean foundOpponent = false;
             while(!foundOpponent) {
                 udpSocket.send(gameTagPacket);
@@ -60,10 +58,13 @@ public class Test {
             }
 
             udpSocket.close();
-
-            // Socket tcpSocket = new Socket(receivePacket.getAddress(), PORT);
-
+            
             System.out.println("Success! IP: " + receivePacket.getAddress() + " Port: " + receivePacket.getPort());
+
+            Socket tcpSocket = new Socket(receivePacket.getAddress(), PORT);
+
+            tcpSocket.close();
+
         } catch(Exception e) {
             System.out.println("Error! " + e.getMessage());
         }
