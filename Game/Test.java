@@ -1,6 +1,7 @@
 package Game;
 
 import java.net.*;
+import java.util.Arrays;
 
 public class Test {
     public static final int MAX_BROADCAST_ATTEMPTS = Short.MAX_VALUE;
@@ -50,7 +51,7 @@ public class Test {
                     continue;
                 }
 
-                if (receivePacket.getAddress() != hostAddr)
+                if (!Arrays.equals(receivePacket.getAddress().getAddress(), hostAddr.getAddress()))
                     if (receivePacket.getLength() > 0) {
                         String receiveString = new String(receivePacket.getData(), 0, receivePacket.getLength());
                         if (gameTagString.contentEquals(receiveString))
