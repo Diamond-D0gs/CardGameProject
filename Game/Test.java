@@ -41,6 +41,8 @@ public class Test {
 
             boolean foundOpponent = false;
             while(!foundOpponent) {
+                udpSocket.send(gameTagPacket);
+
                 try {
                     udpSocket.receive(receivePacket);
                 }
