@@ -59,17 +59,23 @@ public class Test {
 
             udpSocket.close();
 
-            long opponentStartTime = Long.parseLong(gameTagString.substring(23, receiveString.length()));
+            long opponentStartTime = Long.parseLong(receiveString.substring(23, receiveString.length()));
             
             System.out.println("Success! IP: " + receivePacket.getAddress() + " Port: " + receivePacket.getPort());
 
-            ServerSocket receiveSocket = new ServerSocket(PORT);
-            Socket sendSocket = new Socket(receivePacket.getAddress(), PORT);
+            Socket tcpSocket = null;
+            ServerSocket serverSocket = null;
+            if (startTime < opponentStartTime) {
+                serverSocket = new ServerSocket(PORT);
+                serverSocket.setSoTimeout(1000);
+                tcpSocket = serverSocket.accept();
+            }
+            else
+                tcpSocket = new Socket(receivePacket.getAddress(), PORT);
 
-            Thread.sleep(1000);
-
-            receiveSocket.close();
-            sendSocket.close();
+            tcpSocket.close();
+            if (serverSocket != null)
+                serverSocket.close();
 
         } catch(Exception e) {
             System.out.println("Error! " + e.getMessage());
