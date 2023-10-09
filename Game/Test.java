@@ -10,8 +10,7 @@ public class Test {
 
     public static void main(String[] args) {
         try {
-            // byte[] hostAddrBytes = Inet4Address.getLocalHost().getAddress();
-            // InetAddress broadcastAddress = Inet4Address.getByAddress(new byte[] {hostAddrBytes[0], hostAddrBytes[1], hostAddrBytes[2], -1});
+            long startTime = System.currentTimeMillis();
 
             InetAddress broadcastAddr = null;
             InetAddress hostAddr = Inet4Address.getLocalHost();
@@ -31,13 +30,14 @@ public class Test {
             udpSocket.setSoTimeout(MAX_RECEIVE_TIME);
             udpSocket.setBroadcast(true);
             
-            String gameTagString = "Unstable_Unicorns_Game";
+            String gameTagString = "Unstable_Unicorns_Game_" + startTime;
             byte[] gameTagBytes = gameTagString.getBytes();
             DatagramPacket gameTagPacket = new DatagramPacket(gameTagBytes, gameTagBytes.length, broadcastAddr, PORT);
 
             byte[] receiveBuffer = new byte[256];
             DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
 
+            String receiveString = null;
             boolean foundOpponent = false;
             while(!foundOpponent) {
                 udpSocket.send(gameTagPacket);
@@ -51,20 +51,22 @@ public class Test {
 
                 if (!Arrays.equals(receivePacket.getAddress().getAddress(), hostAddr.getAddress()))
                     if (receivePacket.getLength() > 0) {
-                        String receiveString = new String(receivePacket.getData(), 0, receivePacket.getLength());
+                        receiveString = new String(receivePacket.getData(), 0, receivePacket.getLength());
                         if (gameTagString.contentEquals(receiveString))
                             foundOpponent = true;
                     }
             }
 
             udpSocket.close();
+
+            long opponentStartTime = Long.parseLong(gameTagString.substring(23, receiveString.length()));
             
             System.out.println("Success! IP: " + receivePacket.getAddress() + " Port: " + receivePacket.getPort());
 
             ServerSocket receiveSocket = new ServerSocket(PORT);
             Socket sendSocket = new Socket(receivePacket.getAddress(), PORT);
 
-            Thread.sleep(100);
+            Thread.sleep(1000);
 
             receiveSocket.close();
             sendSocket.close();
