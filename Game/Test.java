@@ -37,10 +37,10 @@ public class Test {
             byte[] receiveBuffer = new byte[256];
             DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
 
+
+
             boolean foundOpponent = false;
             while(!foundOpponent) {
-                udpSocket.send(gameTagPacket);
-
                 try {
                     udpSocket.receive(receivePacket);
                 }
@@ -48,11 +48,12 @@ public class Test {
                     continue;
                 }
 
-                if (receivePacket.getLength() > 0) {
-                    String receiveString = new String(receivePacket.getData(), 0, receivePacket.getLength());
-                    if (gameTagString.contentEquals(receiveString))
-                        foundOpponent = true;
-                }
+                if (receivePacket.getAddress() != hostAddr)
+                    if (receivePacket.getLength() > 0) {
+                        String receiveString = new String(receivePacket.getData(), 0, receivePacket.getLength());
+                        if (gameTagString.contentEquals(receiveString))
+                            foundOpponent = true;
+                    }
             }
 
             udpSocket.close();
