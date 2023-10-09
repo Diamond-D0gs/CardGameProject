@@ -57,8 +57,9 @@ public class Test {
 
             udpSocket.close();
 
-            Socket tcpSocket = new Socket(receivePacket.getAddress(), PORT);
+            // Socket tcpSocket = new Socket(receivePacket.getAddress(), PORT);
 
+            System.out.println("Success! IP: " + receivePacket.getAddress() + " Port: " + receivePacket.getPort());
         } catch(Exception e) {
             System.out.println("Error! " + e.getMessage());
         }
