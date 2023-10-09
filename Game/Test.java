@@ -52,7 +52,7 @@ public class Test {
                 if (!Arrays.equals(receivePacket.getAddress().getAddress(), hostAddr.getAddress()))
                     if (receivePacket.getLength() > 0) {
                         receiveString = new String(receivePacket.getData(), 0, receivePacket.getLength());
-                        if (gameTagString.contentEquals(receiveString))
+                        if (gameTagString.contains("Unstable_Unicorns_Game_"))
                             foundOpponent = true;
                     }
             }
