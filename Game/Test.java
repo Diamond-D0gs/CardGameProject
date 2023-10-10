@@ -30,7 +30,8 @@ public class Test {
             udpSocket.setSoTimeout(MAX_RECEIVE_TIME);
             udpSocket.setBroadcast(true);
             
-            String gameTagString = "Unstable_Unicorns_Game_" + startTime;
+            String gameTagName = "Unstable_Unicorns_Game_";
+            String gameTagString = gameTagName + startTime;
             byte[] gameTagBytes = gameTagString.getBytes();
             DatagramPacket gameTagPacket = new DatagramPacket(gameTagBytes, gameTagBytes.length, broadcastAddr, PORT);
 
@@ -52,14 +53,14 @@ public class Test {
                 if (!Arrays.equals(receivePacket.getAddress().getAddress(), hostAddr.getAddress()))
                     if (receivePacket.getLength() > 0) {
                         receiveString = new String(receivePacket.getData(), 0, receivePacket.getLength());
-                        if (gameTagString.contains("Unstable_Unicorns_Game_"))
+                        if (gameTagString.contains(gameTagName))
                             foundOpponent = true;
                     }
             }
 
             udpSocket.close();
 
-            long opponentStartTime = Long.parseLong(receiveString.substring(23, receiveString.length()));
+            long opponentStartTime = Long.parseLong(receiveString.substring(gameTagName.length(), receiveString.length()));
             
             System.out.println("Success! IP: " + receivePacket.getAddress() + " Port: " + receivePacket.getPort());
 
