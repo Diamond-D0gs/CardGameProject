@@ -76,6 +76,11 @@ public class Test {
 
             System.out.println("TCP Connection successfully established! " + ((startTime < opponentStartTime) ? "This end is the server." : "This end is the client."));
 
+            System.out.print("\033[H\033[2J");  
+            System.out.flush();
+
+            System.out.print("Cleared!");
+
             tcpSocket.close();
             if (serverSocket != null)
                 serverSocket.close();
