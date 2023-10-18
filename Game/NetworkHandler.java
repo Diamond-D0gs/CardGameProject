@@ -103,6 +103,14 @@ public class NetworkHandler implements AutoCloseable {
         return true;
     }
 
+    public long GetStartTime() {
+        return startTime;
+    }
+
+    public long GetOpponentStartTime() {
+        return opponentStartTime;
+    }
+
     public void close() throws IOException {
         if (tcpSocket != null)
             tcpSocket.close();

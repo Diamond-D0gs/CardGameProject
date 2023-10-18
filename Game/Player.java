@@ -1,26 +1,22 @@
 package Game;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import Game.Cards.Card;
 
 /**
  * Class representing a player in the game.
  */
-public class Player {
-    private LinkedList<Card> hand;
-    private Stable stable;
-
-    private boolean notUnicorns = false; // Unicorns are not considered unicorns and are uneffected by cards that effect unicorns.
-    private boolean notMagicUnicorns = false; // All magic unicorns are considered basic unicorns.
-    private boolean cantUpgrade = false; // Cannot use upgrade cards.
-    private boolean cantNeigh = false; // Cannot use neigh cards.
+public abstract class Player {
+    public final Hand hand;
+    public final Stable stable;
 
     /**
      * Constructs an instance of a Player.
      */
-    public Player() {
-        hand = new LinkedList<Card>();
+    protected Player(List<Card> startingHand) {
+        hand = new Hand(startingHand);
         stable = new Stable();
-    } 
+    }
 }

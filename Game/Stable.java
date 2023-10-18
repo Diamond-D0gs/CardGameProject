@@ -4,10 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import Game.Cards.Card;
+import Game.Cards.CardAction;
 import Game.Cards.MagicUnicornCard;
 import Game.Cards.ModifierCard;
 import Game.Cards.Unicorn;
-import Game.Cards.CardAction;
 
 /**
  * Represents a player's Stable in the game.
@@ -32,6 +32,7 @@ public class Stable {
      * @throws InvalidParameterException Card type must be Modifier or Unicorn.
      */
     public Stable AddCard(Card card, Player player) throws InvalidParameterException {
+        boolean localPlayer = player instanceof LocalPlayer;
         CardAction onEnterStable = null;
 
         if (card instanceof Unicorn) {
@@ -45,10 +46,9 @@ public class Stable {
         }
         else
             throw new InvalidParameterException("Card type must be Modifier or Unicorn");
-
-        if (onEnterStable != null)
-            if (!onEnterStable.may)
-                onEnterStable.doIt(player);
+        
+        if (localPlayer && onEnterStable != null && !onEnterStable.may)
+            onEnterStable.doIt((LocalPlayer)player);
 
         return this;
     }
@@ -81,5 +81,34 @@ public class Stable {
      */
     public List<Unicorn> GetUnicornCards() {
         return unicorns;
+    }
+
+    public void RemoveModifierCard(int index) {
+        modifiers.remove(index);
+    }
+
+    public void RemoveModifierCards(int startIndex, int endIndex) {
+        modifiers.removeAll(modifiers.subList(startIndex, endIndex));
+    }
+
+    public void ClearModifierCards() {
+        modifiers.clear();
+    }
+
+    public void RemoveUnicornCard(int index) {
+        unicorns.remove(index);
+    }
+
+    public void RemoveUnicornCards(int startIndex, int endIndex) {
+        unicorns.removeAll(unicorns.subList(startIndex, endIndex));
+    }
+
+    public void ClearUnicornCards() {
+        unicorns.clear();
+    }
+
+    public void Clear() {
+        ClearModifierCards();
+        ClearUnicornCards();
     }
 }
