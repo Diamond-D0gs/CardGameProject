@@ -1,71 +1,84 @@
 package Game;
-import java.security.InvalidParameterException;
+
 import java.util.LinkedList;
 import java.util.List;
 
-import Game.Cards.Card;
-import Game.Cards.CardAction;
-import Game.Cards.MagicUnicornCard;
 import Game.Cards.ModifierCard;
 import Game.Cards.Unicorn;
 
 /**
  * Represents a player's Stable in the game.
  */
-public class Stable {
-    private LinkedList<ModifierCard> modifiers;
-    private LinkedList<Unicorn> unicorns;
+public abstract class Stable {
+    protected LinkedList<ModifierCard> modifiers;
+    protected LinkedList<Unicorn> unicorns;
 
     /**
      * Constructs an instance of a Stable.
      */
-    public Stable() {
+    protected Stable() {
         modifiers = new LinkedList<ModifierCard>();
         unicorns = new LinkedList<Unicorn>();
     }
 
-    /**
-     * Adds a Card to the Stable.
-     * @param card Card to be added to the Stable.
-     * @param player Player to act upon if the Card has an OnEnterStable Action.
-     * @return A reference to the Stable.
-     * @throws InvalidParameterException Card type must be Modifier or Unicorn.
-     */
-    public Stable AddCard(Card card, Player player) throws InvalidParameterException {
-        boolean localPlayer = player instanceof LocalPlayer;
-        CardAction onEnterStable = null;
+    // /**
+    //  * Adds a Card to the Stable.
+    //  * @param card Card to be added to the Stable.
+    //  * @param player Player to act upon if the Card has an OnEnterStable Action.
+    //  * @return A reference to the Stable.
+    //  * @throws InvalidParameterException Card type must be Modifier or Unicorn.
+    //  */
+    // public Stable AddCard(Card card, Player player) throws InvalidParameterException {
+    //     boolean localPlayer = player instanceof LocalPlayer;
+    //     CardAction onEnterStable = null;
 
-        if (card instanceof Unicorn) {
-            unicorns.add((Unicorn)card);
-            if (card instanceof MagicUnicornCard)
-                onEnterStable = ((MagicUnicornCard)card).onEnterStable;
-        } 
-        else if (card instanceof ModifierCard) {
-            modifiers.add((ModifierCard)card);
-            onEnterStable = ((ModifierCard)card).onEnterStable;
-        }
-        else
-            throw new InvalidParameterException("Card type must be Modifier or Unicorn");
+    //     if (card instanceof Unicorn) {
+    //         unicorns.add((Unicorn)card);
+    //         if (card instanceof MagicUnicornCard)
+    //             onEnterStable = ((MagicUnicornCard)card).onEnterStable;
+    //     } 
+    //     else if (card instanceof ModifierCard) {
+    //         modifiers.add((ModifierCard)card);
+    //         onEnterStable = ((ModifierCard)card).onEnterStable;
+    //     }
+    //     else
+    //         throw new InvalidParameterException("Card type must be Modifier or Unicorn");
         
-        if (localPlayer && onEnterStable != null && !onEnterStable.may)
-            onEnterStable.doIt((LocalPlayer)player);
+    //     if (localPlayer && onEnterStable != null && !onEnterStable.may)
+    //         onEnterStable.doIt((LocalPlayer)player);
 
+    //     return this;
+    // }
+
+    public abstract Stable AddUnicornCard(Unicorn unicornCard, Player player);
+    
+    public Stable AddUnicornCards(List<Unicorn> unicornCards, Player player) {
+        for (Unicorn unicornCard : unicornCards)
+            AddUnicornCard(unicornCard, player);
+        return this;
+    }
+    
+    public abstract Stable AddModifierCard(ModifierCard modifierCard, Player player);
+
+    public Stable AddModifierCards(List<ModifierCard> modifierCards, Player player) {
+        for (ModifierCard modifierCard : modifierCards)
+            AddModifierCard(modifierCard, player);
         return this;
     }
 
-    /**
-     * Adds a List of Cards to the Stable.
-     * @param cards Cards to be added to the Stable.
-     * @param player Player to act upon if the Card has an OnEnterStable Action.
-     * @return A reference to the Stable.
-     * @throws InvalidParameterException Card type must be Modifier or Unicorn.
-     */
-    public Stable AddCards(List<Card> cards, Player player) throws InvalidParameterException {
-        for (Card card : cards)
-            AddCard(card, player);
+    // /**
+    //  * Adds a List of Cards to the Stable.
+    //  * @param cards Cards to be added to the Stable.
+    //  * @param player Player to act upon if the Card has an OnEnterStable Action.
+    //  * @return A reference to the Stable.
+    //  * @throws InvalidParameterException Card type must be Modifier or Unicorn.
+    //  */
+    // public Stable AddCards(List<Card> cards, Player player) throws InvalidParameterException {
+    //     for (Card card : cards)
+    //         AddCard(card, player);
 
-        return this;
-    }
+    //     return this;
+    // }
 
     /**
      * Gets the List of ModifierCards in the stable.
@@ -83,31 +96,19 @@ public class Stable {
         return unicorns;
     }
 
-    public void RemoveModifierCard(int index) {
-        modifiers.remove(index);
-    }
+    public abstract void RemoveModifierCard(int index);
 
-    public void RemoveModifierCards(int startIndex, int endIndex) {
-        modifiers.removeAll(modifiers.subList(startIndex, endIndex));
-    }
+    public abstract void RemoveModifierCards(int startIndex, int endIndex);
 
-    public void ClearModifierCards() {
-        modifiers.clear();
-    }
+    public abstract void ClearModifierCards();
 
-    public void RemoveUnicornCard(int index) {
-        unicorns.remove(index);
-    }
+    public abstract void RemoveUnicornCard(int index);
 
-    public void RemoveUnicornCards(int startIndex, int endIndex) {
-        unicorns.removeAll(unicorns.subList(startIndex, endIndex));
-    }
+    public abstract void RemoveUnicornCards(int startIndex, int endIndex);
 
-    public void ClearUnicornCards() {
-        unicorns.clear();
-    }
+    public abstract void ClearUnicornCards();
 
-    public void Clear() {
+    public void ClearAllCards() {
         ClearModifierCards();
         ClearUnicornCards();
     }

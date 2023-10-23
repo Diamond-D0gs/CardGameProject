@@ -6,7 +6,7 @@ import java.util.List;
 import Game.Cards.Card;
 
 public class Hand {
-    public final int DEFAULT_HAND_LIMIT = 7;
+    public static final int DEFAULT_HAND_LIMIT = 7;
 
     private LinkedList<Card> cards;
     private int handLimit = DEFAULT_HAND_LIMIT;

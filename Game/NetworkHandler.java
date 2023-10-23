@@ -14,6 +14,21 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 public class NetworkHandler implements AutoCloseable {
+    public enum Receiver {
+        Sender,
+        Receiver
+    }
+
+    public enum Location {
+        SenderHand,
+        SenderStable,
+        ReceiverHand,
+        ReceiverStable,
+        Discard,
+        Nursery,
+        Deck
+    };
+
     public static final int MAX_BROADCAST_ATTEMPTS = Short.MAX_VALUE;
     public static final int MAX_RECEIVE_TIME = 10000; // Milliseconds
     public static final int PORT = 4567;
@@ -109,6 +124,14 @@ public class NetworkHandler implements AutoCloseable {
 
     public long GetOpponentStartTime() {
         return opponentStartTime;
+    }
+
+    public boolean SendMessage(int messageType, int[] data) {
+        return true;
+    }
+
+    public boolean SendMessageV(int messageType, int... data) {
+        return SendMessage(messageType, data);
     }
 
     public void close() throws IOException {
